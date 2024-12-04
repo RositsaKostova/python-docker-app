@@ -2,12 +2,12 @@
 root = true
 
 [*]
-charset = utf-8
-indent_style = space
-indent_size = 4
-end_of_line = lf
-insert_final_newline = true
-trim_trailing_whitespace = true
+charset = utf-8  #за кодировка – това е стандарт за много проекти
+indent_style = space #много проекти използват интервали (не табулации) за отстъп и обикновено 4 интервала за всеки отстъп.
+indent_size = 4 #обикновено 4 интервала за всеки отстъп
+end_of_line = lf #Линукс и Mac използват LF (Line Feed) като символ за нов ред, докато Windows използва CRLF (Carriage Return + Line Feed).
+insert_final_newline = true #това указва, че всеки файл трябва да завършва с нов ред, което е добър стил за избягване на неочаквани грешки.
+trim_trailing_whitespace = true #премахва всички излишни интервали в края на редовете, което е част от добрата практика за чистота на кода.
 
 [*.md]
-max_line_length = off
+max_line_length = off #няма да има ограничение за максималната дължина на редовете в Markdown файловете. 
