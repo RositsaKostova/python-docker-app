@@ -32,11 +32,10 @@ jobs:
 
   UnitTest:
     runs-on: ubuntu-latest
-    needs: [linting, editorconfig_lint]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        
+
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
@@ -44,7 +43,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install Flask==2.3.2 Werkzeug==2.0.3
+          python -m pip install --upgrade pip
+          python -m pip install Flask==2.3.2 Werkzeug==2.3.3
 
       - name: Run tests
         run: |
