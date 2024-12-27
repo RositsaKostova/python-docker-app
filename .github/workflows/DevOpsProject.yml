@@ -19,19 +19,18 @@ jobs:
 
 
   editorconfig_lint:
-    runs-on: ubuntu-22.04
-
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install EditorConfig Checker
-        run: |
-          curl -sSL https://github.com/editorconfig-checker/editorconfig-checker/releases/latest/download/ec-linux-amd64.tar.gz | tar -xz
-          sudo mv ec-linux-amd64 /usr/local/bin/editorconfig-checker
+      - name: Install Editor-Conf-Checker
+        run: pip install editorconfig-checker
 
       - name: Validate .editorconfig
         run: editorconfig-checker .
+
+        
   
     
   test:
