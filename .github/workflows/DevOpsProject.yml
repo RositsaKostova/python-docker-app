@@ -5,7 +5,6 @@ jobs:
 
   linting:
     runs-on: ubuntu-latest
-
     steps:
       - name: Clone repository
         uses: actions/checkout@v3
@@ -17,3 +16,19 @@ jobs:
 
       - name: Run Flake8 checks
         run: flake8 src/app_test.py
+
+
+  editorconfig_lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone the repository
+        uses: actions/checkout@v3
+
+      - name: Set up EditorConfig Checker
+        run: |
+          python -m pip install --upgrade pip
+          pip install editorconfig-checker
+
+      - name: Validate .editorconfig
+        run: editorconfig-checker --version
+  
