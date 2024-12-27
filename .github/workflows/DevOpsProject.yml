@@ -86,26 +86,20 @@ jobs:
           python3 -m unittest src/app_test.py
 
 
-  sonar_cloud:
-    name: Run SonarCloud Analysis
+  SonarCloudTest:
     runs-on: ubuntu-latest
-
+    permissions:
+     packages: write
     steps:
-      # Checkout на кода от репозитория
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      # Настройка на SonarCloud анализатора
-      - name: Set up SonarCloud
-        uses: sonarsource/sonarcloud-github-action@v2.0.0
-        with:
-          # Задаване на необходимите аргументи за анализа
-          args: >
-            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
-            -Dsonar.organization=${{ secrets.SONAR_ORG_KEY }}
-            -Dsonar.host.url=https://sonarcloud.io
-
-        env:
-          # Токен за достъп до SonarCloud
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    - name: SonarCloud Scan
+      uses: sonarsource/sonarcloud-github-action@v2.0.0
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_PROJECT_KEY: "python-docker-app"  # Твоят проектен ключ
+        SONAR_ORG_KEY: "RositsaKostova"        # Твоята организация
+        SONAR_HOST_URL: "https://sonarcloud.io"
 
