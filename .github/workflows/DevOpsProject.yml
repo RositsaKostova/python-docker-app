@@ -84,20 +84,6 @@ jobs:
         run: |
           export PYTHONPATH=./src
           python3 -m unittest src/app_test.py
-
-  test:
-    runs-on: ubuntu-latest
-    permissions:
-      packages: write
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        
-      - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@v2.0.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           
   SonarCloudTest:
     runs-on: ubuntu-latest
