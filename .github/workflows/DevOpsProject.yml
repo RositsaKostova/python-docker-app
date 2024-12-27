@@ -108,3 +108,4 @@ jobs:
         env:
           # Токен за достъп до SonarCloud
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
