@@ -37,7 +37,7 @@ jobs:
 
     - name: Markdown Link Validation
       uses: ruzickap/action-my-markdown-link-checker@v1.1.2
-
+      
   database_migrations:
    runs-on: ubuntu-latest
    steps:
@@ -54,10 +54,15 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r src/requirements.txt
 
-    - name: Check for database migrations
+    - name: Verify Alembic Installation
       run: |
-        alembic upgrade head
-        alembic history
+        python -m alembic --help || (echo "Alembic is not installed correctly!" && exit 1)
+
+    - name: Run database migrations
+      run: |
+        python -m alembic upgrade head
+        python -m alembic history
+
 
   unit_testing:
     runs-on: ubuntu-latest
