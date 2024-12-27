@@ -103,3 +103,5 @@ jobs:
         SONAR_ORG_KEY: ${{ secrets.SONAR_ORG_KEY }}        # Твоята организация
         SONAR_HOST_URL: "https://sonarcloud.io"
 
+
+
