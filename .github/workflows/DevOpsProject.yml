@@ -88,17 +88,14 @@ jobs:
   SonarCloudTest:
     runs-on: ubuntu-latest
     permissions:
-     packages: write
+      packages: write
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: SonarCloud Scan
-      uses: sonarsource/sonarcloud-github-action@master
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}  # Твоят проектен ключ
-        SONAR_ORG_KEY: ${{ secrets.SONAR_ORG_KEY }}        # Твоята организация
-        SONAR_HOST_URL: "https://sonarcloud.io"
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
