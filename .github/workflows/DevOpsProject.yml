@@ -19,16 +19,18 @@ jobs:
 
 
   editorconfig_lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
+
     steps:
-      - name: Clone the repository
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up EditorConfig Checker
+      - name: Install EditorConfig Checker
         run: |
-          python -m pip install --upgrade pip
-          pip install editorconfig-checker
+          sudo apt-get update
+          sudo apt-get install -y editorconfig-checker
 
       - name: Validate .editorconfig
-        run: editorconfig-checker --version
+        run: editorconfig-checker .
+
   
