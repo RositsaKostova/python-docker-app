@@ -61,7 +61,7 @@ jobs:
 
   unit_testing:
     runs-on: ubuntu-latest
-    needs: [linting, editorconfig_lint]
+    needs: [linting, markdown_file_check, editorconfig_lint]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
