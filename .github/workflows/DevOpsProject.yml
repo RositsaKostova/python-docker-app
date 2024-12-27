@@ -24,10 +24,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install EditorConfig Checker
-        run: |
-          curl -sSL https://github.com/editorconfig-checker/editorconfig-checker/releases/latest/download/ec-linux-amd64.tar.gz | tar -xz
-          sudo mv ec-linux-amd64 /usr/local/bin/editorconfig-checker
+      - name: Install Editor-Conf-Checker
+        run: pip install editorconfig-checker
 
       - name: Editor-Conf Check
         run: ec -version
