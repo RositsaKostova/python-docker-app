@@ -27,10 +27,12 @@ jobs:
 
       - name: Install EditorConfig Checker
         run: |
-          sudo apt-get update
-          sudo apt-get install -y editorconfig-checker
+          curl -sSL https://github.com/editorconfig-checker/editorconfig-checker/releases/latest/download/ec-linux-amd64.tar.gz | tar -xz
+          sudo mv ec-linux-amd64 /usr/local/bin/editorconfig-checker
 
       - name: Validate .editorconfig
         run: editorconfig-checker .
+  
+    
 
   
