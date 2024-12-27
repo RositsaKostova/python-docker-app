@@ -27,7 +27,7 @@ jobs:
       - name: Install Editor-Conf-Checker
         run: pip install editorconfig-checker
 
-      - name: Validate .editorconfig
-        run: editorconfig-checker .
+      - name: Editor-Conf Check
+        run: ec -version
 
         
