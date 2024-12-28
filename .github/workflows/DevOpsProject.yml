@@ -117,37 +117,19 @@ jobs:
           snyk test
           
   
-  GitleaksCheck:
-   runs-on: ubuntu-latest
-   steps:
-    # Изтегляне на кода
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    # Инсталиране на Gitleaks ръчно
-    - name: Install Gitleaks
-      run: |
-        curl -sSL https://github.com/gitleaks/gitleaks/releases/latest/download/gitleaks-linux-amd64 -o /usr/local/bin/gitleaks
-        chmod +x /usr/local/bin/gitleaks
-
-    # Изпълнение на Gitleaks
-    - name: Run Gitleaks
-      run: |
-        gitleaks detect --source . --report-format json --report-path gitleaks-report.json
-
-    # Проверка за резултати
-    - name: Upload Gitleaks Report
-      if: always()
-      uses: actions/upload-artifact@v3
-      with:
-        name: gitleaks-report
-        path: gitleaks-report.json
-
-    # Провали се, ако бъдат открити тайни
-    - name: Fail on secrets detection
-      if: failure()
-      run: echo "Gitleaks detected hardcoded secrets in the codebase. Review the report and fix the issues."
-
+  GitLeaksCheck:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          
+      - name: Gitleaks check
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
   docker_push:
     runs-on: ubuntu-latest
     needs: [SonarCloudTest, unit_testing]
