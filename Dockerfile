@@ -13,8 +13,6 @@ COPY . /src/
 
 # Инсталирай Python зависимости
 RUN pip3 --version 
-#install
-#-r /src/requirements.txt
 
 # Декларирай порта, който приложението ще използва
 EXPOSE 5000
