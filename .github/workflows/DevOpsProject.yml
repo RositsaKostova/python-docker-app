@@ -109,6 +109,9 @@ jobs:
      steps:
       - name: Checkout code
         uses: actions/checkout@v3 
+
+      - name: Clear Docker Cache
+        run: docker builder prune -a -f
         
       - name: Docker Login
         uses: docker/login-action@v3
