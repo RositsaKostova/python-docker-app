@@ -238,3 +238,12 @@ jobs:
 
       - name: Push Image to Dockerhub  
         run: docker push rositsakostova/python-docker-app:latest
+
+  docker_performance_check:
+   runs-on: ubuntu-latest
+   steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Docker build with cache
+      run: docker build --cache-from=my-docker-image --tag optimized-image .
