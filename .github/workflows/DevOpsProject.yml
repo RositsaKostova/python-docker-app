@@ -171,17 +171,17 @@ jobs:
       - name: Run Codacy Analysis CLI
         uses: codacy/codacy-analysis-cli-action@master 
 
-  performance_test:
+  dependency_check:
    runs-on: ubuntu-latest
    steps:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Install Locust
-      run: pip install locust
-
-    - name: Run Performance Test
-      run: locust -f locustfile.py
+    - name: Install pip-tools
+      run: |
+        pip install pip-tools
+        pip-compile --output-file=requirements.txt requirements.in
+        pip install -r requirements.txt
           
   Build_Push:
      runs-on: ubuntu-latest
