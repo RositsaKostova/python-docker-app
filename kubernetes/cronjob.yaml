@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: devops-backup
+spec:
+  schedule: "0 3 * * *"  # Всеки ден в 3 сутринта
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: backup
+            image: alpine
+            command: ["/bin/sh", "-c", "echo 'Backup completed!'"]
+          restartPolicy: OnFailure
