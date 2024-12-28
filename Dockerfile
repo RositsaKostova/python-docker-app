@@ -12,7 +12,7 @@ WORKDIR /src
 COPY src/requirements.txt /src/requirements.txt
 
 # Инсталирай Python зависимости
-RUN pip3 install -r requirements.txt
+RUN pip3 install -r /src/requirements.txt
 
 # Копирай всички файлове на приложението от папката src
 COPY src/ /src
