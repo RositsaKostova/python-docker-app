@@ -126,9 +126,8 @@ jobs:
     # Инсталиране на Gitleaks
     - name: Install Gitleaks
       run: |
-        curl -sSL https://github.com/gitleaks/gitleaks/releases/latest/download/gitleaks-linux-amd64 -o gitleaks
-        chmod +x gitleaks
-        sudo mv gitleaks /usr/local/bin
+        sudo apt-get update
+        sudo apt-get install -y gitleaks
 
     # Изпълнение на Gitleaks
     - name: Run Gitleaks
@@ -147,7 +146,6 @@ jobs:
     - name: Fail on secrets detection
       if: failure()
       run: echo "Gitleaks detected hardcoded secrets in the codebase. Review the report and fix the issues."
-
 
   docker_push:
     runs-on: ubuntu-latest
