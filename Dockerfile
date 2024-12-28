@@ -1,18 +1,21 @@
-# The base image
+# Базов образ
 FROM ubuntu:latest
 
-# Install python and pip
-RUN apt-get update -y
-RUN apt-get install -y python3 python3-pip
+# Инсталирай системни пакети
+RUN apt-get update -y && apt-get install -y \
+    python3 python3-pip python3-dev build-essential libffi-dev
 
-COPY . . 
+# Създай работна директория
+WORKDIR /src
 
-# Install Python modules needed by the Python app
-RUN pip3 install -r /src/requirements.txt
+# Копирай всички файлове от проектната директория в контейнера
+COPY . /src/
 
-# Declare the port number the container should expose
+# Инсталирай Python зависимости
+RUN pip3 --version 
+
+# Декларирай порта, който приложението ще използва
 EXPOSE 5000
 
-# Run the application
-CMD ["python3", "/src/app.py"]
-
+# Стартирай приложението
+CMD ["python3", "app.py"]
