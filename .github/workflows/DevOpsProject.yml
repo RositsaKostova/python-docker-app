@@ -103,25 +103,18 @@ jobs:
         SONAR_HOST_URL: "https://sonarcloud.io"
 
   SnykScan:
-   runs-on: ubuntu-latest
-   steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Install Snyk CLI
-      run: |
-        curl -sL https://snyk.io/install | bash
-
-    - name: Authenticate Snyk
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      run: snyk auth $SNYK_TOKEN
-
-    - name: Scan dependencies for vulnerabilities
-      run: snyk test --file=src/requirements.txt --severity-threshold=high
-
-    - name: Monitor project for continuous monitoring
-      run: snyk monitor --file=src/requirements.txt
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Run Snyk Security Check
+        working-directory: ${{github.workspace}}/src
+        run: |
+          pip install -r requirements.txt
+          npm install -g snyk
+          snyk auth ${{secrets.SNYK_TOKEN}}
+          snyk test
 
   docker_push:
     runs-on: ubuntu-latest
