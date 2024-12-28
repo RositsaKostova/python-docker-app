@@ -116,6 +116,7 @@ jobs:
           snyk auth ${{secrets.SNYK_TOKEN}}
           snyk test
           
+  
   GitleaksCheck:
    runs-on: ubuntu-latest
    steps:
@@ -123,11 +124,12 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # Инсталиране на Gitleaks
+    # Инсталиране на Gitleaks ръчно
     - name: Install Gitleaks
       run: |
-        sudo apt-get update
-        sudo apt-get install -y gitleaks
+        curl -sSL https://github.com/gitleaks/gitleaks/releases/latest/download/gitleaks-linux-amd64 -o gitleaks
+        chmod +x gitleaks
+        sudo mv gitleaks /usr/local/bin/
 
     # Изпълнение на Gitleaks
     - name: Run Gitleaks
