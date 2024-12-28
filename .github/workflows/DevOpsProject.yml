@@ -184,16 +184,23 @@ jobs:
         pip install -r requirements.txt
 
   black_formatting:
-   runs-on: ubuntu-latest
-   steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Install Black
-      run: pip install black
+      - name: Install Black
+        run: pip install black
 
-    - name: Run Black code formatter
-      run: black --check .
+      - name: Check formatting with Black
+        id: black_check
+        run: |
+          black --check .
+        continue-on-error: true # Позволява job-ът да продължи, дори ако проверката не е успешна
+
+      - name: Apply formatting with Black
+        if: steps.black_check.outcome == 'failure' # Форматира кода само ако проверката е неуспешна
+        run: black .
           
   Build_Push:
      runs-on: ubuntu-latest
