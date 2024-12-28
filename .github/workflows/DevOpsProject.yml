@@ -170,6 +170,18 @@ jobs:
 
       - name: Run Codacy Analysis CLI
         uses: codacy/codacy-analysis-cli-action@master 
+
+  performance_test:
+   runs-on: ubuntu-latest
+   steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install Locust
+      run: pip install locust
+
+    - name: Run Performance Test
+      run: locust -f locustfile.py
           
   Build_Push:
      runs-on: ubuntu-latest
