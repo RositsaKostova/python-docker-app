@@ -102,6 +102,23 @@ jobs:
         SONAR_ORG_KEY: ${{ secrets.SONAR_ORG_KEY }}        # Твоята организация
         SONAR_HOST_URL: "https://sonarcloud.io"
 
+  CodeCov:
+     runs-on: ubuntu-latest
+     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@master
+        with:
+           python-version: 3.7
+     
+      - name: Check code coverage
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}     
+          working-directory: .
+
   Build_Push:
      runs-on: ubuntu-latest
      permissions:
