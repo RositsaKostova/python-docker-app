@@ -102,6 +102,27 @@ jobs:
         SONAR_ORG_KEY: ${{ secrets.SONAR_ORG_KEY }}        # Твоята организация
         SONAR_HOST_URL: "https://sonarcloud.io"
 
+  SnykScan:
+   runs-on: ubuntu-latest
+   steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install Snyk CLI
+      run: |
+        curl -sL https://snyk.io/install | bash
+
+    - name: Authenticate Snyk
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      run: snyk auth $SNYK_TOKEN
+
+    - name: Scan dependencies for vulnerabilities
+      run: snyk test --file=src/requirements.txt --severity-threshold=high
+
+    - name: Monitor project for continuous monitoring
+      run: snyk monitor --file=src/requirements.txt
+
   docker_push:
     runs-on: ubuntu-latest
     needs: [SonarCloudTest, unit_testing]
