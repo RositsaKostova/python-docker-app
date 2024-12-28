@@ -115,6 +115,39 @@ jobs:
           npm install -g snyk
           snyk auth ${{secrets.SNYK_TOKEN}}
           snyk test
+          
+  GitleaksCheck:
+   runs-on: ubuntu-latest
+   steps:
+    # Изтегляне на кода
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Инсталиране на Gitleaks
+    - name: Install Gitleaks
+      run: |
+        curl -sSL https://github.com/gitleaks/gitleaks/releases/latest/download/gitleaks-linux-amd64 -o gitleaks
+        chmod +x gitleaks
+        sudo mv gitleaks /usr/local/bin
+
+    # Изпълнение на Gitleaks
+    - name: Run Gitleaks
+      run: |
+        gitleaks detect --source . --report-format json --report-path gitleaks-report.json
+
+    # Проверка за резултати
+    - name: Upload Gitleaks Report
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: gitleaks-report
+        path: gitleaks-report.json
+
+    # Провали се, ако бъдат открити тайни
+    - name: Fail on secrets detection
+      if: failure()
+      run: echo "Gitleaks detected hardcoded secrets in the codebase. Review the report and fix the issues."
+
 
   docker_push:
     runs-on: ubuntu-latest
