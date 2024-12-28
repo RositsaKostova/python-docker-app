@@ -102,12 +102,11 @@ jobs:
         SONAR_ORG_KEY: ${{ secrets.SONAR_ORG_KEY }}        # Твоята организация
         SONAR_HOST_URL: "https://sonarcloud.io"
 
-  docker_push:
-    runs-on: ubuntu-latest
-    needs: [SonarCloudTest, unit_testing]
-    permissions:
-     packages: write
-    steps:
+  Build_Push:
+     runs-on: ubuntu-latest
+     permissions:
+      packages: write
+     steps:
       - name: Checkout code
         uses: actions/checkout@v3 
         
@@ -119,12 +118,12 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
     
       - name: Build an image
-        run: docker build -t "my_first_app" .
+        run: docker build -t "python-docker-app" .
 
       - name: AquaSec Trivy
         uses: aquasecurity/trivy-action@0.13.1
         with:
-          image-ref: "my_first_app"
+          image-ref: "python-docker-app"
           scan-ref: .  #its the default code
           exit-code: 1
           timeout: 3m0s
@@ -132,9 +131,9 @@ jobs:
           severity: "CRITICAL"        
         
       - name: Tag an image 
-        run: docker tag my_first_app username/python-app:latest
+        run: docker tag python-docker-app rositsakostova/python-docker-app:latest
 
       - name: Push Image to Dockerhub  
-        run: docker push username/python-app:latest
+        run: docker push rositsakostova/python-docker-app:latest
 
 
