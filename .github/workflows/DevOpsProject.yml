@@ -186,5 +186,3 @@ jobs:
 
       - name: Push Image to Dockerhub  
         run: docker push username/python-app:latest
-
-
