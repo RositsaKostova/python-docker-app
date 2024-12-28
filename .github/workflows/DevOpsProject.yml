@@ -161,6 +161,15 @@ jobs:
          env:
           WORKSPACE: .
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  Codacy-Analysis-CLI:
+     runs-on: ubuntu-latest
+     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run Codacy Analysis CLI
+        uses: codacy/codacy-analysis-cli-action@master 
           
   Build_Push:
      runs-on: ubuntu-latest
