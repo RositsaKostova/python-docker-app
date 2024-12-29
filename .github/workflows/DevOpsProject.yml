@@ -6,6 +6,7 @@ jobs:
 
   linting:
     runs-on: ubuntu-latest
+    needs: [git_leak_check]
     steps:
       - name: Clone repository
         uses: actions/checkout@v3
@@ -20,6 +21,7 @@ jobs:
 
   markdown_file_check:
    runs-on: ubuntu-latest
+   needs: [git_leak_check]
    steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
@@ -29,6 +31,7 @@ jobs:
 
   editorconfig_lint:
     runs-on: ubuntu-latest
+    needs: [git_leak_check]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -41,7 +44,7 @@ jobs:
               
   database_migrations: 
     runs-on: ubuntu-latest
-    needs: [linting, editorconfig_lint, markdown_file_check]
+    needs: [linting, black_formatting, editorconfig_lint, markdown_file_check]
     services:
       postgres:
         image: postgres
@@ -65,7 +68,7 @@ jobs:
 
   unit_testing:
     runs-on: ubuntu-latest
-    needs: [linting, markdown_file_check, editorconfig_lint]
+    needs: [black_formatting, linting, markdown_file_check, editorconfig_lint]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -87,7 +90,7 @@ jobs:
           
   sonar_cloud_test:
     runs-on: ubuntu-latest
-    needs: [git_leak_check, database_migrations, unit_testing]
+    needs: [database_migrations, unit_testing]
     permissions:
      packages: write
     steps:
@@ -105,7 +108,7 @@ jobs:
 
   snyk_scan:
     runs-on: ubuntu-latest
-    needs: [git_leak_check, database_migrations, unit_testing]
+    needs: [database_migrations, unit_testing]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -121,7 +124,6 @@ jobs:
   
   git_leak_check:
     runs-on: ubuntu-latest
-    needs: [linting, markdown_file_check, editorconfig_lint]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -135,7 +137,7 @@ jobs:
 
   code_cov:
     runs-on: ubuntu-latest
-    needs: [git_leak_check, database_migrations, unit_testing]
+    needs: [database_migrations, unit_testing]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -153,7 +155,7 @@ jobs:
 
   SecScan2:
      runs-on: ubuntu-latest
-     needs: [git_leak_check, database_migrations, unit_testing]
+     needs: [database_migrations, unit_testing]
      steps:
        - name: Checkout code
          uses: actions/checkout@v3
@@ -168,7 +170,7 @@ jobs:
 
   codacy_analysis_CLI:
      runs-on: ubuntu-latest
-     needs: [git_leak_check, database_migrations, unit_testing]
+     needs: [database_migrations, unit_testing]
      steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -178,7 +180,7 @@ jobs:
 
   dependency_check:
    runs-on: ubuntu-latest
-   needs: [git_leak_check, database_migrations, unit_testing]
+   needs: [database_migrations, unit_testing]
    steps:
     - name: Checkout code
       uses: actions/checkout@v3
@@ -191,7 +193,7 @@ jobs:
 
   black_formatting:
     runs-on: ubuntu-latest
-    needs: [database_migrations, unit_testing, git_leak_check]
+    needs: [git_leak_check]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -211,7 +213,7 @@ jobs:
           
   image_push:
      runs-on: ubuntu-latest
-     needs: [sonar_cloud_test, snyk_scan, git_leak_check, code_cov, SecScan2, codacy_analysis_CLI, dependency_check, black_formatting]
+     needs: [sonar_cloud_test, snyk_scan, code_cov, SecScan2, codacy_analysis_CLI, dependency_check, black_formatting]
      permissions:
       packages: write
      steps:
