@@ -445,5 +445,4 @@ If you want to use minikube again to learn more about Kubernetes, you don't need
 - [SonarCloud](https://sonarcloud.io/)
 - [Snyk](https://snyk.io/)
 - [Trivy](https://aquasecurity.github.io/trivy/)
-- [Codacy](https
 
