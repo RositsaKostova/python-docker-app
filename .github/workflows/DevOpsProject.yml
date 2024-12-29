@@ -41,6 +41,9 @@ jobs:
 
       - name: Editor-Conf Check
         run: ec -version
+
+      - name: Check files for EditorConfig compliance
+        run: ec .
               
   database_migrations: 
     runs-on: ubuntu-latest
