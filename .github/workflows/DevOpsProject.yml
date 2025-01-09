@@ -268,10 +268,10 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Pull Docker Image
-      run: docker pull rositsakostova/python-docker-app:latest
+    - name: Docker build with cache
+      run: docker build --cache-from=my-docker-image --tag optimized-image .
 
-    - name: Run Performance Test
+    - name: Stress test
       run: |
-        docker run --rm rositsakostova/python-docker-app:latest stress --cpu 4 --timeout 30
-        docker stats --no-stream
+        docker run --rm rositsakostova/python-docker-app:latest &
+        docker run --rm alpine:latest sh -c "apk add --no-cache stress && stress --cpu 4 --timeout 30"
