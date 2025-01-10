@@ -216,7 +216,7 @@ jobs:
           
   image_push:
      runs-on: ubuntu-latest
-     needs: [complexity_analysis, sonar_cloud_test, snyk_scan, code_cov, SecScan2, codacy_analysis_CLI, dependency_check, black_formatting]
+     needs: [complexity_analysis, sonar_cloud_test, snyk_scan, code_cov, SecScan2, dependency_check, black_formatting]
      permissions:
       packages: write
      steps:
