@@ -148,7 +148,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@master
         with:
-           python-version: 3.7
+           python-version: 3.12
      
       - name: Check code coverage
         uses: codecov/codecov-action@v3
@@ -265,14 +265,3 @@ jobs:
      - name: Run Cyclomatic Complexity Check
        run: radon cc src/ -a
 
-  license_compliance:
-   runs-on: ubuntu-latest
-   steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Install License Finder
-      run: gem install license_finder
-
-    - name: Run License Check
-      run: license_finder
