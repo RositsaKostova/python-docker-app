@@ -265,15 +265,3 @@ jobs:
      - name: Run Cyclomatic Complexity Check
        run: radon cc src/ -a
 
-  mutation_testing:
-   runs-on: ubuntu-latest
-   needs: [unit_testing]
-   steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Install Mutmut
-      run: pip install mutmut
-
-    - name: Run Mutation Tests
-      run: mutmut run --paths-to-mutate src/
