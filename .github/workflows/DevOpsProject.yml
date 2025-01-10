@@ -264,3 +264,15 @@ jobs:
 
      - name: Run Cyclomatic Complexity Check
        run: radon cc src/ -a
+
+  license_compliance:
+   runs-on: ubuntu-latest
+   steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install License Finder
+      run: gem install license_finder
+
+    - name: Run License Check
+      run: license_finder
