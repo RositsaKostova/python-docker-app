@@ -216,7 +216,7 @@ jobs:
           
   image_push:
      runs-on: ubuntu-latest
-     needs: [sonar_cloud_test, snyk_scan, code_cov, SecScan2, codacy_analysis_CLI, dependency_check, black_formatting]
+     needs: [complexity_analysis, sonar_cloud_test, snyk_scan, code_cov, SecScan2, codacy_analysis_CLI, dependency_check, black_formatting]
      permissions:
       packages: write
      steps:
@@ -254,7 +254,7 @@ jobs:
 
   complexity_analysis:
      runs-on: ubuntu-latest
-     #needs: [linting, unit_testing]
+     needs: [unit_testing, database_migrations]
      steps:
      - name: Checkout code
        uses: actions/checkout@v3
