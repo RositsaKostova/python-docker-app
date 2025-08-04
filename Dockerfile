@@ -1,5 +1,5 @@
 # Базов образ
-FROM ubuntu:latest
+FROM ubuntu:24.10
 
 # Инсталирай системни пакети
 RUN apt-get update -y && apt-get install -y \
